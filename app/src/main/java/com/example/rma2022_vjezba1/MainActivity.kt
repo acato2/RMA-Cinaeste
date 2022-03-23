@@ -3,24 +3,39 @@ package com.example.rma2022_vjezba1
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 
 class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private lateinit var listView: ListView
+    private lateinit var button: Button
+    private lateinit var editText: EditText
+    private val listaVrijednosti= arrayListOf<String>()
+    private lateinit var adapter: ArrayAdapter<String>
+
+    override fun onCreate(savedInstance : Bundle?){
+        super.onCreate(savedInstance)
         setContentView(R.layout.activity_main)
-        val button = findViewById<Button>(R.id.button1)
+
+        //Inicijaliziramo elemente
+        button = findViewById<Button>(R.id.button1)
+        editText = findViewById<EditText>(R.id.editText1)
+        listView = findViewById<ListView>(R.id.listView1)
+        adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,listaVrijednosti)
+        listView.adapter=adapter
+
         button.setOnClickListener{
-            showMessage()
+            addToList()
         }
+
+
     }
-    private fun showMessage(){
-        val editText = findViewById<EditText>(R.id.editText1)
-        val textView = findViewById<TextView>(R.id.textView1)
-        val message = editText.text.toString()
-        Log.v("TESTLOG",message)
-        textView.text=message
+
+    private fun addToList() {
+        listaVrijednosti.add(0,editText.text.toString())
+        adapter.notifyDataSetChanged();
+        editText.setText("")
+
     }
+
+
 }
