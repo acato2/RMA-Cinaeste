@@ -1,8 +1,7 @@
-package com.example.rma2022_vjezba1
+package com.example.cinaeste
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.*
 
 class MainActivity : AppCompatActivity() {
