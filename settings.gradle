@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "RMA2022-vjezba1"
+rootProject.name = "Cinaeste"
 include ':app'

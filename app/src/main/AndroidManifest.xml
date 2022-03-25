@@ -11,6 +11,7 @@
         android:theme="@style/Theme.RMA2022vjezba1">
         <activity
             android:name="com.example.cinaeste.MainActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
