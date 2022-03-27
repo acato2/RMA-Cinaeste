@@ -8,7 +8,10 @@ fun favoriteMovies() : List<Movie>{
             "drama"),
         Movie(2,"Taken","When his estranged daughter is kidnapped in Paris, a former spy (Neeson) sets out to find her at any cost. Relying on his special skills, he tracks down the ruthless gang that abducted her and launches a one-man war to bring them to justice and rescue his daughter.",
                "27.02.2008","https://www.imdb.com/title/tt0936501/","action"),
-        Movie(3,"Fatherhood","A father brings up his baby girl as a single dad after the unexpected death of his wife who died a day after their daughter's birth.","18.06.2021","https://www.imdb.com/title/tt4733624/","comedy")
+        Movie(3,"Fatherhood","A father brings up his baby girl as a single dad after the unexpected death of his wife who died a day after their daughter's birth.","18.06.2021","https://www.imdb.com/title/tt4733624/","comedy"),
+        Movie(4,"The Conjuring","In 1970, paranormal investigators and demonologists Lorraine (Vera Farmiga) and Ed (Patrick Wilson) Warren are summoned to the home of Carolyn (Lili Taylor) and Roger (Ron Livingston) Perron. The Perrons and their five daughters have recently moved into a secluded farmhouse, where a supernatural presence has made itself known.","4.06.2021","https://www.imdb.com/title/tt1457767/","horror"),
+        Movie(5,"The Royal Treatment","New York hairdresser Izzy seizes the chance to work at the wedding of a charming prince. When sparks start to fly between the two of them, love and duty are put to the test as the time of the wedding draws closer.","20.01.2022","https://www.imdb.com/title/tt13989030/","romance")
+
     )
 
 }
@@ -18,9 +21,14 @@ fun recentMovies():List<Movie>{
         Movie(1,"The Contractor",
             "A discharged U.S. Special Forces sergeant, James Harper, risks everything for his family when he joins a private contracting organization.",
             "01.04.2022.","https://www.imdb.com/title/tt10323676/",
-            "thriller"),
-        Movie(2,"Deep water","Deep Water is about the writer's journey of overcoming the fear of water, which is deeply rooted in him since childhood. ","18.03.2022","https://www.imdb.com/title/tt2180339/","thriller"),
-        Movie(3,"Master","Two African American women begin to share disturbing experiences at a predominantly white college in New England.","18.03.2022","https://www.imdb.com/title/tt11286210/","drama")
+            "action"),
+        Movie(2,"Love Tactics",
+            "An ad executive and a fashion designer-blogger don't believe in love, so they place a bet to make the other fall head over heels -- with unusual tactics.",
+            "11.02.2022.","https://www.imdb.com/title/tt14486678/",
+            "romance"),
+        Movie(3,"Free Guy","When a bank teller discovers he's actually a background player in an open-world video game, he decides to become the hero of his own story -- one that he can rewrite himself.  ","13.08.2021","https://www.imdb.com/title/tt6264654/","scifi"),
+        Movie(4,"Master","Two African American women begin to share disturbing experiences at a predominantly white college in New England.","18.03.2022","https://www.imdb.com/title/tt11286210/","drama"),
+        Movie(5,"Texas Chainsaw Massacre","When Sally (Marilyn Burns) hears that her grandfather's grave may have been vandalized, she and her paraplegic brother, Franklin (Paul A. Partain), set out with their friends to investigate.","18.02.2022","https://www.imdb.com/title/tt11755740/","horror")
 
     )
 }
