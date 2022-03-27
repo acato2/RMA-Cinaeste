@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="128dp"
     android:layout_height="172dp"
-   >
+    android:layout_marginRight="10dp"
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,12 +15,14 @@
             android:id="@+id/movieImage"
             android:layout_width="109dp"
             android:layout_height="105dp"
+            android:layout_gravity="center"
             app:srcCompat="@drawable/movie_icon" />
 
         <TextView
             android:id="@+id/movieTitle"
             android:layout_width="113dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:editable="false"
             android:textAlignment="center" />
     </LinearLayout>
