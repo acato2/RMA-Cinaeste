@@ -13,6 +13,9 @@ class MainActivity : AppCompatActivity(){
     private lateinit var favoriteMoviesAdapter : MovieListAdapter
     private var movieListViewModel = MovieListViewModel()
 
+    private lateinit var recentMovies : RecyclerView
+    private lateinit var recentMoviesAdapter: MovieListAdapter
+
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,6 +29,18 @@ class MainActivity : AppCompatActivity(){
         favoriteMoviesAdapter= MovieListAdapter(listOf())
         favoriteMovies.adapter=favoriteMoviesAdapter
         favoriteMoviesAdapter.updateMovies(movieListViewModel.getFavoriteMovie())
+
+        recentMovies=findViewById(R.id.recentMovies)
+        recentMovies.layoutManager=LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        recentMoviesAdapter= MovieListAdapter(listOf())
+        recentMovies.adapter=recentMoviesAdapter
+        recentMoviesAdapter.updateMovies(movieListViewModel.getRecentMovie())
+
+
 
     }
 
