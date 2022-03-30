@@ -1,6 +1,9 @@
 package com.example.cinaeste
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -36,6 +39,9 @@ class MovieDetailActivity : AppCompatActivity() {
         else{
             finish()
         }
+        website.setOnClickListener{
+            showWebsite()
+        }
 
     }
     fun populateDetails(){
@@ -48,5 +54,14 @@ class MovieDetailActivity : AppCompatActivity() {
         var id :Int=context.getResources().getIdentifier(movie.genre,"drawable",context.packageName)
         if(id==0)id=context.resources.getIdentifier("movie_icon","drawable",context.packageName)
         poster.setImageResource(id)
+    }
+    fun showWebsite(){
+        val webIntent: Intent = Uri.parse(movie.homepage).let{webpage ->
+          Intent(Intent.ACTION_VIEW,webpage)}
+        try{
+            startActivity(webIntent)
+        }catch(e:ActivityNotFoundException){
+            //nesto
+        }
     }
 }

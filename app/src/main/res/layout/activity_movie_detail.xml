@@ -21,11 +21,12 @@
 
     <TextView
         android:id="@+id/movie_title"
-        android:layout_width="219dp"
-        android:layout_height="30dp"
+        android:layout_width="215dp"
+        android:layout_height="25dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="11dp"
-        android:textSize="25sp"
+        android:textColor="#FFFFFF"
+        android:textSize="23sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/movie_release_date"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,6 +83,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="227dp"
+        android:textColor="#2196F3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/movie_poster_card"
         app:layout_constraintTop_toBottomOf="@+id/movie_backdrop"
