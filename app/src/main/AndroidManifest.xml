@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RMA2022vjezba1">
         <activity
-            android:name="com.example.cinaeste.MainActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"
-            android:exported="true">
+            android:name=".MovieDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

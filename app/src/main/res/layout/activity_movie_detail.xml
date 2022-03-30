@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MovieDetailActivity">
+
+    <ImageView
+        android:id="@+id/movie_backdrop"
+        android:layout_width="434dp"
+        android:layout_height="276dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/movie_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background_image" />
+
+    <TextView
+        android:id="@+id/movie_title"
+        android:layout_width="214dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/movie_release_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/movie_poster_card"
+        app:layout_constraintTop_toBottomOf="@+id/movie_backdrop" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/movie_poster_card"
+        android:layout_width="149dp"
+        android:layout_height="221dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="13dp"
+        app:layout_constraintBottom_toTopOf="@+id/movie_website"
+        app:layout_constraintEnd_toStartOf="@+id/movie_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_backdrop"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/movie_release_date"
+        android:layout_width="111dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="114dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/movie_genre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toEndOf="@+id/movie_genre"
+        app:layout_constraintTop_toBottomOf="@+id/movie_title" />
+
+    <TextView
+        android:id="@+id/movie_genre"
+        android:layout_width="85dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginBottom="117dp"
+        app:layout_constraintBottom_toTopOf="@+id/movie_website"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/movie_poster_card"
+        app:layout_constraintTop_toBottomOf="@+id/movie_release_date" />
+
+    <TextView
+        android:id="@+id/movie_overview"
+        android:layout_width="368dp"
+        android:layout_height="178dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_website" />
+
+    <TextView
+        android:id="@+id/movie_website"
+        android:layout_width="296dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="89dp"
+        android:layout_marginBottom="13dp"
+        app:layout_constraintBottom_toTopOf="@+id/movie_overview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_poster_card" />
+</androidx.constraintlayout.widget.ConstraintLayout>
