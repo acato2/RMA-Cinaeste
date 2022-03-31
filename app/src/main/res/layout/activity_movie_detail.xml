@@ -72,6 +72,8 @@
         android:layout_height="25dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="132dp"
+        android:layout_marginBottom="135dp"
+        app:layout_constraintBottom_toTopOf="@+id/movie_website"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/movie_poster_card"
@@ -82,12 +84,15 @@
         android:layout_width="281dp"
         android:layout_height="30dp"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="3dp"
         android:layout_marginBottom="227dp"
         android:textColor="#2196F3"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/movie_overview"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/movie_poster_card"
         app:layout_constraintTop_toBottomOf="@+id/movie_backdrop"
-        app:layout_constraintVertical_bias="0.981" />
+        app:layout_constraintVertical_bias="0.963" />
 
     <TextView
         android:id="@+id/movie_overview"
