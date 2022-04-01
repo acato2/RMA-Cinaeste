@@ -4,10 +4,11 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.cinaeste.data.Movie
 import com.example.cinaeste.viewmodel.MovieDetailViewModel
 
@@ -19,6 +20,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private lateinit var genre:TextView
     private lateinit var website:TextView
     private lateinit var poster:ImageView
+    private lateinit var button:Button
     private var movieDetailViewModel = MovieDetailViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,7 @@ class MovieDetailActivity : AppCompatActivity() {
         genre=findViewById(R.id.movie_genre)
         website=findViewById(R.id.movie_website)
         poster=findViewById(R.id.movie_poster)
+        button=findViewById(R.id.button1)
 
         var extras = intent.extras
         if(extras!=null){
@@ -42,8 +45,43 @@ class MovieDetailActivity : AppCompatActivity() {
         website.setOnClickListener{
             showWebsite()
         }
+        title.setOnClickListener{
+            openYouTube()
+        }
+        button.setOnClickListener{
+            showOverView()
+        }
 
     }
+
+    private fun showOverView() {
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT,movie.overview)
+            type="text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent,null)
+        try{
+            startActivity(sendIntent)
+        }catch(e:ActivityNotFoundException){
+            //nesto
+        }
+
+    }
+
+    private fun openYouTube() {
+        val intent = Intent(Intent.ACTION_SEARCH)
+        intent.setPackage("com.google.android.youtube")
+        intent.putExtra("query","${title.text} trailer" )
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        try{
+            startActivity(intent)
+        }catch(e:ActivityNotFoundException){
+            //nesto
+        }
+
+    }
+
     fun populateDetails(){
         title.text=movie.title
         releaseDate.text=movie.releaseDate

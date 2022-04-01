@@ -1,6 +1,8 @@
 package com.example.cinaeste
 
+import android.content.BroadcastReceiver
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
@@ -16,6 +18,8 @@ class MainActivity : AppCompatActivity(){
     private lateinit var favoriteMoviesAdapter : MovieListAdapter
     private var movieListViewModel = MovieListViewModel()
     private lateinit var searchText : EditText
+    private val br: BroadcastReceiver = ConnectivityBroadcastReceiver()
+    private val filter = IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
 
     private lateinit var recentMovies : RecyclerView
     private lateinit var recentMoviesAdapter: MovieListAdapter
@@ -65,6 +69,16 @@ class MainActivity : AppCompatActivity(){
             putExtra("movie_title",movie.title)
         }
         startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(br,filter)
+    }
+
+    override fun onPause() {
+        unregisterReceiver(br)
+        super.onPause()
     }
 
 }
