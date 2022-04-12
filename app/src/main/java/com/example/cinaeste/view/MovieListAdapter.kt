@@ -20,6 +20,7 @@ class MovieListAdapter( private var movies: List<Movie>,
         val movieTitle : TextView = view.findViewById(R.id.movieTitle)
 
     }
+
     //kreiraj novi view
     override fun onCreateViewHolder(
         parent: ViewGroup,

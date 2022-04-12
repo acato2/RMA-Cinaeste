@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cinaeste.R
 import com.example.cinaeste.data.Movie
 import com.example.cinaeste.viewmodel.MovieDetailViewModel
 
