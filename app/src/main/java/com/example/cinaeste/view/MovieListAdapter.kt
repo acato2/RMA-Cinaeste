@@ -12,7 +12,7 @@ import com.example.cinaeste.data.Movie
 import com.example.cinaeste.R
 
 class MovieListAdapter( private var movies: List<Movie>,
-                        private val onItemClicked:(movie:Movie)->Unit):
+                        private val onItemClicked: (movie:Movie,view1:View,view2:View) -> Unit):
       RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>(){
     //definisemo reference na sve elemente
     inner class MovieViewHolder(view: View):RecyclerView.ViewHolder(view){
@@ -37,7 +37,8 @@ class MovieListAdapter( private var movies: List<Movie>,
         var id : Int = context.getResources().getIdentifier(genreMatch,"drawable",context.getPackageName())
         if(id==0)id=context.getResources().getIdentifier("movie_icon","drawable",context.getPackageName())
         holder.movieImage.setImageResource(id)
-        holder.itemView.setOnClickListener{onItemClicked(movies[position])}
+        holder.itemView.setOnClickListener{ onItemClicked(movies[position],holder.movieImage,holder.movieTitle) }
+
     }
 
     override fun getItemCount(): Int = movies.size
