@@ -32,3 +32,33 @@ fun recentMovies():List<Movie>{
 
     )
 }
+fun movieActors():Map<String,List<String>>{
+    return mapOf(
+        "Pride and prejudice" to listOf("Keira Knightley","Matthew Macfadyen","Rosamund Pike"),
+        "Taken" to listOf("Liam Neeson","Maggie Grace","Jon Gries"),
+        "Fatherhood" to listOf("Kevin Hart","Anthony Carrigan","Melody Hurd"),
+        "The Conjuring" to listOf("Vera Farmiga","Patrick Wilson","Sterling Jerins"),
+        "The Royal Treatment" to listOf("Laura Marano","Mena Massoud","Chelsie Preston Crayford"),
+        "The Contractor" to listOf("Eliza Bennett","Wesley Snipes","Lena Headey"),
+        "Love Tactics" to listOf("Demet Özdemir","Şükrü Özyıldız","Yasemin Yazıcı"),
+        "Free Guy" to listOf("Ryan Reynolds","Jodie Comer","Dwayne Johnson"),
+        "Master" to listOf("Thalapathy Vijay","Malavika Mohanan","Vijay Sethupathi"),
+        "Texas Chainsaw Massacre" to listOf("Sarah Yarkin","Mark Burnham","Olwen Fouéré")
+        )
+}
+fun movieSimilar():Map<String,List<String>>{
+    return mapOf(
+        "Pride and prejudice" to listOf("Atonement","Anna Karenina","Sense and Sensibility"),
+        "Taken" to listOf("Salt","Unknown","Peppermint"),
+        "Fatherhood" to listOf("Yes Day","The Starling","The Unforgivable"),
+        "The Conjuring" to listOf("The Curse of La Llorona","The Nun","Annabelle"),
+        "The Royal Treatment" to listOf("Through My Window","Love Tactics"),
+        "The Contractor" to listOf("All the Old Knives","Infinite","Without Remorse"),
+        "Love Tactics" to listOf("UFO","Last Summer","Hot Sweet Sour"),
+        "Free Guy" to listOf("Reminiscence","Infinite","6 Underground"),
+        "Master" to listOf("Magnolia","Inherent Vice","Phantom Thread"),
+        "Texas Chainsaw Massacre" to listOf("Leatherface","Psycho","Halloween")
+
+    )
+
+}
