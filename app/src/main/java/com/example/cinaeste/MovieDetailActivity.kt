@@ -9,8 +9,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.example.cinaeste.R
 import com.example.cinaeste.data.Movie
+import com.example.cinaeste.view.*
 import com.example.cinaeste.viewmodel.MovieDetailViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 
 class MovieDetailActivity : AppCompatActivity() {
     private lateinit var movie:Movie
@@ -23,6 +28,26 @@ class MovieDetailActivity : AppCompatActivity() {
     private lateinit var button:Button
     private var movieDetailViewModel = MovieDetailViewModel()
 
+    private lateinit var bottomNavigation : BottomNavigationView
+
+    //Listener za click
+    private val mOnItemSelectedListener = NavigationBarView.OnItemSelectedListener{ item ->
+        when (item.itemId) {
+            R.id.navigation_actors -> {
+                val actorsFragment = ActorsFragment(movie.title)
+                openFragment(actorsFragment)
+                return@OnItemSelectedListener true
+            }
+            R.id.navigation_similarMovies -> {
+                val similarMoviesFragment = SimilarMoviesFragment(movie.title)
+                openFragment(similarMoviesFragment)
+                return@OnItemSelectedListener true
+            }
+
+        }
+        false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
@@ -32,7 +57,10 @@ class MovieDetailActivity : AppCompatActivity() {
         genre=findViewById(R.id.movie_genre)
         website=findViewById(R.id.movie_website)
         poster=findViewById(R.id.movie_poster)
-        button=findViewById(R.id.button1)
+        bottomNavigation = findViewById(R.id.detailNavigation)
+        bottomNavigation.setOnItemSelectedListener(mOnItemSelectedListener)
+
+
 
         var extras = intent.extras
         if(extras!=null){
@@ -48,10 +76,15 @@ class MovieDetailActivity : AppCompatActivity() {
         title.setOnClickListener{
             openYouTube()
         }
-        button.setOnClickListener{
-            showOverView()
-        }
 
+
+    }
+    //Funkcija za izmjenu fragmenta
+    private fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.actorSimilarContainer, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     private fun showOverView() {
@@ -95,7 +128,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
     fun showWebsite(){
         val webIntent: Intent = Uri.parse(movie.homepage).let{webpage ->
-          Intent(Intent.ACTION_VIEW,webpage)}
+            Intent(Intent.ACTION_VIEW,webpage)}
         try{
             startActivity(webIntent)
         }catch(e:ActivityNotFoundException){

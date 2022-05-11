@@ -1,4 +1,4 @@
-package com.example.rma2022_vjezba1
+package com.example.cinaeste
 
 import org.junit.Test
 

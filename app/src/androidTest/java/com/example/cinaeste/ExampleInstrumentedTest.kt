@@ -1,4 +1,4 @@
-package com.example.rma2022_vjezba1
+package com.example.cinaeste
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
