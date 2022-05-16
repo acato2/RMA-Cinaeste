@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinaeste.data.Movie
 import com.example.cinaeste.R
+import com.bumptech.glide.Glide
 
 class MovieListAdapter( private var movies: List<Movie>,
                         private val onItemClicked: (movie:Movie,view1:View,view2:View) -> Unit):
@@ -20,6 +21,7 @@ class MovieListAdapter( private var movies: List<Movie>,
         val movieTitle : TextView = view.findViewById(R.id.movieTitle)
 
     }
+    private val posterPath = "https://image.tmdb.org/t/p/w342"
 
     //kreiraj novi view
     override fun onCreateViewHolder(
@@ -29,14 +31,23 @@ class MovieListAdapter( private var movies: List<Movie>,
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie,parent,false)
         return MovieViewHolder(view)
     }
+
     //izmjeni sadrzaj viewa
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.movieTitle.text=movies[position].title
-        val genreMatch : String = movies[position].genre
+        val genreMatch : String? = movies[position].genre
         val context : Context = holder.movieImage.getContext()
-        var id : Int = context.getResources().getIdentifier(genreMatch,"drawable",context.getPackageName())
-        if(id==0)id=context.getResources().getIdentifier("movie_icon","drawable",context.getPackageName())
-        holder.movieImage.setImageResource(id)
+        var id : Int =0
+        if(genreMatch!==null) id = context.getResources().getIdentifier(genreMatch,"drawable",context.getPackageName())
+        if(id===0)id=context.getResources().getIdentifier("movie_icon","drawable",context.getPackageName())
+        //holder.movieImage.setImageResource(id)
+        Glide.with(context)
+            .load(posterPath + movies[position].posterPath)
+            .centerCrop()
+            .placeholder(R.drawable.movie_icon)
+            .error(id)
+            .fallback(id)
+            .into(holder.movieImage);
         holder.itemView.setOnClickListener{ onItemClicked(movies[position],holder.movieImage,holder.movieTitle) }
 
     }

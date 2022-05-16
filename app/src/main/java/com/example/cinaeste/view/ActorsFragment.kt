@@ -4,30 +4,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinaeste.R
-import com.example.cinaeste.data.Movie
 import com.example.cinaeste.viewmodel.MovieDetailViewModel
 
-class ActorsFragment(movieName : String) : Fragment(){
+class ActorsFragment(movieName : String,movieId:Long?) : Fragment(){
     private var movieName : String = movieName
-    private var movieDetailViewModel = MovieDetailViewModel()
+    private var movieId:Long? = movieId
+    private lateinit var movieRV:RecyclerView
+    private var actorsList= listOf<String>()
+    private lateinit var actorsRVSimpleAdapter:SimpleStringAdapter
+    private var movieDetailViewModel = MovieDetailViewModel(null, this@ActorsFragment::actorsRetrieved,null)
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.actors_fragment, container, false)
-        var actorsList = movieDetailViewModel.getActorsByTitle(movieName)
-        var actorsRV= view.findViewById<RecyclerView>(R.id.listActors)
-        actorsRV.layoutManager = LinearLayoutManager(activity)
-        var actorsRVSimpleAdapter = SimpleStringAdapter(actorsList)
-        actorsRV.adapter=actorsRVSimpleAdapter
-
+        var view: View = inflater.inflate(R.layout.actors_fragment, container, false)
+        movieRV = view.findViewById(R.id.listActors)
+        //ako je naslov
+        actorsList = movieName?.let { movieDetailViewModel.getActorsByTitle(it) }!!
+        movieRV.layoutManager = LinearLayoutManager(activity)
+        actorsRVSimpleAdapter = SimpleStringAdapter(actorsList)
+        movieRV.adapter = actorsRVSimpleAdapter
+        //ako je id
+        movieId?.let { movieDetailViewModel.getActors(it) }
         return view
+    }
+    fun actorsRetrieved(actors:MutableList<String>){
+        actorsList=actors
+        actorsRVSimpleAdapter.list=actors
+        actorsRVSimpleAdapter.notifyDataSetChanged();
     }
 
 }
