@@ -24,7 +24,7 @@ class MovieDetailViewModel(private val movieRetrieved: ((movies: Movie) -> Unit)
         movies.addAll(MovieRepository.getFavoriteMovies())
         movies.addAll(MovieRepository.getRecentMovies())
         val movie = movies.find{movie -> name.equals(movie.title)}
-        return movie ?:Movie(0,"Test","Test","Test","Test","Test","Test","Test")
+        return movie ?:Movie(0,"Test","Test","Test","Test","Test","Test")
 
     }
 

@@ -131,14 +131,10 @@ class MovieDetailActivity : AppCompatActivity() {
     fun populateDetails(){
         title.text=movie.title
         releaseDate.text=movie.releaseDate
-        genre.text=movie.genre
         overview.text=movie.overview
         website.text=movie.homepage
         val context:Context=poster.context
         var id = 0;
-        if (movie.genre!==null)
-            id = context.getResources()
-                .getIdentifier(movie.genre, "drawable", context.getPackageName())
         if (id===0) id=context.getResources()
             .getIdentifier("movie_icon", "drawable", context.getPackageName())
         Glide.with(context)

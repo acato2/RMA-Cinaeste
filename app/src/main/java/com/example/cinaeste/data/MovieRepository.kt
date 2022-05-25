@@ -1,6 +1,7 @@
 package com.example.cinaeste.data
 
 import com.example.cinaeste.BuildConfig
+import com.example.cinaeste.view.ApiAdapter
 import com.google.android.material.theme.overlay.MaterialThemeOverlay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -47,7 +48,7 @@ object MovieRepository {
                         val overview = movie.getString("overview")
                         val releaseDate = movie.getString("release_date")
                         val backdropPath = movie.getString("backdrop_path")
-                        movies.add(Movie(id.toLong(),title,overview,releaseDate,null,null,posterPath,backdropPath))
+                        movies.add(Movie(id.toLong(),title,overview,releaseDate,null,posterPath,backdropPath))
                         if(i==5)break
                     }
 
@@ -72,7 +73,7 @@ object MovieRepository {
             try{
                 val url1 = "https://api.themoviedb.org/3/movie/$id?api_key=$tmdb_api_key"
                 val url = URL(url1)
-                var movie = Movie(0, "Test", "Test", "Test", "Test", "Test", "Test","Test")
+                var movie = Movie(0, "Test", "Test", "Test", "Test", "Test", "Test")
                 (url.openConnection() as? HttpURLConnection)?.run {
                     val result = this.inputStream.bufferedReader().use {
                         it.readText()
@@ -84,7 +85,6 @@ object MovieRepository {
                     movie.overview = jo.getString("overview")
                     movie.releaseDate = jo.getString("release_date")
                     movie.homepage = jo.getString("homepage")
-                    movie.genre = jo.getJSONArray("genres").getJSONObject(0).getString("name")
                     movie.backdropPath = jo.getString("backdrop_path")
 
 
@@ -103,6 +103,15 @@ object MovieRepository {
         }
 
     }
+    suspend fun getUpcomingMovies(
+    ) : GetMoviesResponse?{
+        return withContext(Dispatchers.IO) {
+            var response = ApiAdapter.retrofit.getUpcomingMovies()
+            val responseBody = response.body()
+            return@withContext responseBody
+        }
+    }
+
 
 
 

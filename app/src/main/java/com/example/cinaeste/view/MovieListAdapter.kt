@@ -35,11 +35,9 @@ class MovieListAdapter( private var movies: List<Movie>,
     //izmjeni sadrzaj viewa
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.movieTitle.text=movies[position].title
-        val genreMatch : String? = movies[position].genre
         val context : Context = holder.movieImage.getContext()
         var id : Int =0
-        if(genreMatch!==null) id = context.getResources().getIdentifier(genreMatch,"drawable",context.getPackageName())
-        if(id===0)id=context.getResources().getIdentifier("movie_icon","drawable",context.getPackageName())
+
         //holder.movieImage.setImageResource(id)
         Glide.with(context)
             .load(posterPath + movies[position].posterPath)

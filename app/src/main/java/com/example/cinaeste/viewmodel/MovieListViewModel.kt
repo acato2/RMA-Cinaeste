@@ -1,5 +1,6 @@
 package com.example.cinaeste.viewmodel
 
+import com.example.cinaeste.data.GetMoviesResponse
 import com.example.cinaeste.data.Movie
 import com.example.cinaeste.data.MovieRepository
 import kotlinx.coroutines.CoroutineScope
@@ -32,4 +33,15 @@ class MovieListViewModel(private val searchDone : ((movies:List<Movie>) -> Unit)
             }
         }
     }
+    fun getUpcoming( onSuccess: (movies: List<Movie>) -> Unit,
+                     onError: () -> Unit){
+        scope.launch{
+            val result = MovieRepository.getUpcomingMovies()
+            when (result) {
+                is GetMoviesResponse -> onSuccess?.invoke(result.movies)
+                else-> onError?.invoke()
+            }
+        }
+    }
+
 }
