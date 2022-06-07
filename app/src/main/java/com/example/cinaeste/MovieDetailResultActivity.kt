@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.cinaeste.data.Movie
+import com.example.cinaeste.data.MovieRepository
+import kotlinx.coroutines.launch
 
 class MovieDetailResultActivity : AppCompatActivity() {
     private  var movie= Movie(0, "Test", "Test", "Test", "Test", "Test", "Test")
@@ -63,6 +65,7 @@ class MovieDetailResultActivity : AppCompatActivity() {
             .fallback(R.drawable.background_image)
             .into(backdrop);
     }
+
 }
 
 

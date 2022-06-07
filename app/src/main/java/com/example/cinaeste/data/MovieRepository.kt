@@ -1,5 +1,6 @@
 package com.example.cinaeste.data
 
+import android.content.Context
 import com.example.cinaeste.BuildConfig
 import com.example.cinaeste.view.ApiAdapter
 import com.google.android.material.theme.overlay.MaterialThemeOverlay
@@ -21,9 +22,27 @@ sealed class Result<out R>{
 
 object MovieRepository {
     private const val tmdb_api_key : String = BuildConfig.TMDB_API_KEY
-    fun getFavoriteMovies(): List<Movie>{
-        return favoriteMovies()
+
+    suspend fun getFavoriteMovies(context: Context): List<Movie>{
+        return withContext(Dispatchers.IO) {
+            var db = AppDatabase.getInstance(context)
+            var movies = db!!.movieDao().getAll()
+            return@withContext movies
+        }
     }
+    suspend fun writeFavorite(context: Context,movie:Movie) : String?{
+        return withContext(Dispatchers.IO) {
+            try{
+                var db = AppDatabase.getInstance(context)
+                db!!.movieDao().insertAll(movie)
+                return@withContext "success"
+            }
+            catch(error:Exception){
+                return@withContext null
+            }
+        }
+    }
+
     fun getRecentMovies(): List<Movie>{
         return recentMovies()
     }
@@ -111,7 +130,6 @@ object MovieRepository {
             return@withContext responseBody
         }
     }
-
 
 
 

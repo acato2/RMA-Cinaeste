@@ -130,6 +130,14 @@
 
             </FrameLayout>
 
+            <Button
+                android:id="@+id/addFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="add to favorites"
+                tools:layout_editor_absoluteX="219dp"
+                tools:layout_editor_absoluteY="16dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

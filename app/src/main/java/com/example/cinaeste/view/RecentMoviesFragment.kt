@@ -39,12 +39,12 @@ class RecentMoviesFragment : Fragment() {
 
     private fun showMovieDetails(movie: Movie, view1: View,view2:View) {
         val intent = Intent(activity, MovieDetailActivity::class.java).apply {
-            putExtra("movie_title", movie.title)
+            putExtra("movie_id", movie.id)
         }
         val options = ActivityOptions
             .makeSceneTransitionAnimation(activity,  Pair.create(view1, "poster"),
                 Pair.create(view2, "title"))
-        startActivity(intent, options.toBundle())
+        startActivity(intent,options.toBundle())
     }
 
     companion object {

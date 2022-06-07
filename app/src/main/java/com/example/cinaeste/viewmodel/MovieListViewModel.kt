@@ -1,5 +1,6 @@
 package com.example.cinaeste.viewmodel
 
+import android.content.Context
 import com.example.cinaeste.data.GetMoviesResponse
 import com.example.cinaeste.data.Movie
 import com.example.cinaeste.data.MovieRepository
@@ -12,9 +13,17 @@ import com.example.cinaeste.data.Result
 class MovieListViewModel(private val searchDone : ((movies:List<Movie>) -> Unit)?,
                             private val onError : (()->Unit)?) {
     val scope = CoroutineScope(Job() + Dispatchers.Main)
-    fun getFavoriteMovie():List<Movie>{
-        return MovieRepository.getFavoriteMovies()
+    fun getFavorites(context: Context, onSuccess: (movies: List<Movie>) -> Unit,
+                     onError: () -> Unit){
+        scope.launch{
+            val result = MovieRepository.getFavoriteMovies(context)
+            when (result) {
+                is List<Movie> -> onSuccess?.invoke(result)
+                else-> onError?.invoke()
+            }
+        }
     }
+
     fun getRecentMovie():List<Movie>{
         return MovieRepository.getRecentMovies()
     }

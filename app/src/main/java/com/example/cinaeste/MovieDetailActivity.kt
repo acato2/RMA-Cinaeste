@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -30,6 +32,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private lateinit var poster:ImageView
     private lateinit var button:Button
     private lateinit var backdrop : ImageView
+    private lateinit var addFavorite : Button
     private val posterPath= "https://image.tmdb.org/t/p/w780"
     private val backdropPath= "https://image.tmdb.org/t/p/w500"
 
@@ -66,6 +69,7 @@ class MovieDetailActivity : AppCompatActivity() {
         backdrop = findViewById(R.id.movie_backdrop)
         bottomNavigation = findViewById(R.id.detailNavigation)
         bottomNavigation.setOnItemSelectedListener(mOnItemSelectedListener)
+        addFavorite=findViewById(R.id.addFavorites)
 
 
 
@@ -88,6 +92,9 @@ class MovieDetailActivity : AppCompatActivity() {
         }
         title.setOnClickListener{
             openYouTube()
+        }
+        addFavorite.setOnClickListener {
+            writeDB()
         }
 
 
@@ -165,6 +172,19 @@ class MovieDetailActivity : AppCompatActivity() {
     fun movieRetrieved(movie:Movie){
         this.movie =movie;
         populateDetails()
+    }
+    fun writeDB(){
+        movieDetailViewModel.writeDB(applicationContext,this.movie,onSuccess = ::onSuccess1,
+            onError = ::onError)
+    }
+    fun onSuccess1(message:String){
+        val toast = Toast.makeText(applicationContext, "Spaseno", Toast.LENGTH_SHORT)
+        toast.show()
+        addFavorite.visibility= View.GONE
+    }
+    fun onError() {
+        val toast = Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT)
+        toast.show()
     }
 
 
