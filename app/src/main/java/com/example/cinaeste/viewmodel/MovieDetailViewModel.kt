@@ -1,70 +1,66 @@
 package com.example.cinaeste.viewmodel
 
 import android.content.Context
-import android.util.Log
+import com.example.cinaeste.data.Cast
+import com.example.cinaeste.data.GetCastResponse
+import com.example.cinaeste.data.GetSimilarResponse
 import com.example.cinaeste.data.ActorMovieRepository
 import com.example.cinaeste.data.Movie
 import com.example.cinaeste.data.MovieRepository
-import com.example.cinaeste.data.SimilarMoviesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import com.example.cinaeste.data.Result
-import kotlin.reflect.KFunction0
 
-class MovieDetailViewModel(private val movieRetrieved: ((movies: Movie) -> Unit)?,
-                           private val actorsRetrieved:  ((actors: MutableList<String>) -> Unit)?,
-                           private val similarMoviesRetrieved: ((similar: MutableList<String>) -> Unit)?
+class MovieDetailViewModel(
 ) {
 
     val scope = CoroutineScope(Job() +Dispatchers.Main)
 
 
-   fun getMovieByTitle(name : String): Movie {
-        val movies : ArrayList<Movie> = arrayListOf() //inicijaliziramo
-        //movies.addAll(MovieRepository.getFavoriteMovies())
-        //movies.addAll(MovieRepository.getRecentMovies())
-        val movie = movies.find{movie -> name.equals(movie.title)}
-        return movie ?:Movie(0,"Test","Test","Test","Test","Test","Test")
-
+    fun getMovieByTitle(name:String):Movie{
+        var movies: ArrayList<Movie> = arrayListOf()
+        val movie= movies.find { movie -> name.equals(movie.title) }
+        return movie?:Movie(0,"Test","Test","Test","Test","Test","Test")
     }
 
-    fun getActorsByTitle(name: String): List<String> {
-        return ActorMovieRepository.getActorMovies()?.get(name)?: emptyList()
-
-    }
-
-    fun getSimilarMoviesByTitle(name: String): List<String> {
-        return SimilarMoviesRepository.getSimilarMovies()?.get(name)?: emptyList()
-
-
-    }
-
-    fun getMovieDetails(query : Long){
-        scope.launch {
-            val result = MovieRepository.getMovieDetails(query)
-            when(result){
-                is Result.Success<Movie>->movieRetrieved?.invoke(result.data)
-                else -> Log.v("meh","meh")
+    fun getSimilarMoviesById(query: Long, onSuccess: (movies: List<Movie>) -> Unit,
+                             onError: () -> Unit){
+        scope.launch{
+            val result = MovieRepository.getSimilarMovies(query)
+            when (result) {
+                is GetSimilarResponse -> onSuccess?.invoke(result.movies)
+                else-> onError?.invoke()
             }
         }
     }
-    fun getActors(query : Long){
-        scope.launch {
-            val result = ActorMovieRepository.getActors(query)
-            when(result){
-                is Result.Success<MutableList<String>>->actorsRetrieved?.invoke(result.data)
-                else -> Log.v("meh","meh")
+    fun getSimilarMoviesByIdDB(context: Context,id: Long, onSuccess: (movies: List<Movie>) -> Unit,
+                               onError: () -> Unit){
+        scope.launch{
+            val result = MovieRepository.getSimilarMoviesDB(context,id)
+            when (result) {
+                is List<*> -> onSuccess?.invoke(result)
+                else-> onError?.invoke()
             }
         }
     }
-    fun getSimilarMovies(query : Long){
-        scope.launch {
-            val result = SimilarMoviesRepository.getSimilarMoviesAPI(query)
-            when(result){
-                is Result.Success<MutableList<String>>->similarMoviesRetrieved?.invoke(result.data)
-                else -> Log.v("meh","meh")
+    fun getActorsById(query: Long, onSuccess: (actors: List<Cast>) -> Unit,
+                      onError: () -> Unit){
+        scope.launch{
+            val result = ActorMovieRepository.getCast(query)
+            when (result) {
+                is GetCastResponse -> onSuccess?.invoke(result.cast)
+                else-> onError?.invoke()
+            }
+        }
+    }
+    fun getActorsByIdDB(context: Context, id: Long, onSuccess: (actors: List<Cast>) -> Unit,
+                        onError: () -> Unit){
+        scope.launch{
+            val result = MovieRepository.getCastDB(context,id)
+            when (result) {
+                is List<*> -> onSuccess?.invoke(result)
+                else-> onError?.invoke()
             }
         }
     }
@@ -79,9 +75,31 @@ class MovieDetailViewModel(private val movieRetrieved: ((movies: Movie) -> Unit)
         }
     }
 
+    fun getMovieFromDB(context: Context, id:Long, onSuccess: (movies: Movie) -> Unit,
+                       onError: () -> Unit){
 
 
+        scope.launch{
+            val result = MovieRepository.getMovieDB(context,id)
+            when (result) {
+                is Movie -> onSuccess?.invoke(result)
+                else-> onError?.invoke()
+            }
+        }
+    }
 
-
-
+    fun getMovie(query: Long, onSuccess: (movies: Movie) -> Unit,
+                 onError: () -> Unit){
+        scope.launch{
+            val result = MovieRepository.getMovie(query)
+            when (result) {
+                is Movie -> onSuccess?.invoke(result)
+                else-> onError?.invoke()
+            }
+        }
+    }
 }
+
+
+
+

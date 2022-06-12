@@ -15,9 +15,9 @@ data class Movie(
     @ColumnInfo(name = "release_date") @SerializedName("release_date")   var releaseDate: String,
     @ColumnInfo(name = "homepage") @SerializedName("homepage")   var homepage: String?,
     @ColumnInfo(name = "poster_path") @SerializedName("poster_path") var posterPath: String?,
-    @ColumnInfo(name = "backdrop_path") @SerializedName("backdrop_path")  var backdropPath: String?
-
-    ):Parcelable{
+    @ColumnInfo(name = "backdrop_path") @SerializedName("backdrop_path")  var backdropPath: String?,
+    @ColumnInfo(name = "favourite") var favourite: Long = 0
+):Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
         parcel.readString()!!,
@@ -25,7 +25,9 @@ data class Movie(
         parcel.readString()!!,
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()!!)
+        parcel.readString()!!,
+        parcel.readLong()) {
+    }
 
     override fun describeContents(): Int {
         return 0
@@ -39,6 +41,7 @@ data class Movie(
         parcel.writeString(homepage)
         parcel.writeString(posterPath)
         parcel.writeString(backdropPath)
+        parcel.writeLong(favourite)
     }
     companion object CREATOR : Parcelable.Creator<Movie> {
         override fun createFromParcel(parcel: Parcel): Movie {

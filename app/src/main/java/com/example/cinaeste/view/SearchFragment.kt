@@ -30,6 +30,7 @@ class SearchFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.search_fragment, container, false)
         searchText = view.findViewById(R.id.searchText)
+        movieListViewModel = context?.let { MovieListViewModel(it) }!!
         arguments?.getString("search")?.let {
             searchText.setText(it)
         }
@@ -42,7 +43,7 @@ class SearchFragment : Fragment() {
         searchButton.setOnClickListener{
             onClick()
         }
-        movieListViewModel = MovieListViewModel(this@SearchFragment::searchDone,this@SearchFragment::onError)
+
         return view
     }
 
@@ -56,9 +57,10 @@ class SearchFragment : Fragment() {
         startActivity(intent,options.toBundle())
     }
     private fun onClick() {
-        val toast = Toast.makeText(context,"Search start",Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(context, "Search start", Toast.LENGTH_SHORT)
         toast.show()
-        movieListViewModel.search(searchText.text.toString())
+        movieListViewModel.search(searchText.text.toString(),onSuccess = ::onSuccess,
+            onError = ::onError)
     }
     fun searchDone(movies : List<Movie>){
         val toast = Toast.makeText(context,"Search done",Toast.LENGTH_SHORT)
@@ -69,6 +71,11 @@ class SearchFragment : Fragment() {
     fun onError() {
         val toast = Toast.makeText(context, "Search error", Toast.LENGTH_SHORT)
         toast.show()
+    }
+    fun onSuccess(movies:List<Movie>){
+        val toast = Toast.makeText(context, "Upcoming movies found", Toast.LENGTH_SHORT)
+        toast.show()
+        resultsAdapter.updateMovies(movies)
     }
 
     companion object {

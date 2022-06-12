@@ -4,30 +4,26 @@ import android.content.Context
 import com.example.cinaeste.data.GetMoviesResponse
 import com.example.cinaeste.data.Movie
 import com.example.cinaeste.data.MovieRepository
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import com.example.cinaeste.data.Result
 
-class MovieListViewModel(private val searchDone : ((movies:List<Movie>) -> Unit)?,
-                            private val onError : (()->Unit)?) {
+
+
+class MovieListViewModel(private val context: Context) {
+
     val scope = CoroutineScope(Job() + Dispatchers.Main)
-    fun getFavorites(context: Context, onSuccess: (movies: List<Movie>) -> Unit,
-                     onError: () -> Unit){
-        scope.launch{
-            val result = MovieRepository.getFavoriteMovies(context)
-            when (result) {
-                is List<Movie> -> onSuccess?.invoke(result)
-                else-> onError?.invoke()
-            }
-        }
+
+    val favoriteMovies = MovieRepository.getFavorites(context)
+
+    fun getRecentMovies():List<Movie>{
+        return MovieRepository.getRecentMovies();
     }
 
-    fun getRecentMovie():List<Movie>{
-        return MovieRepository.getRecentMovies()
-    }
-    fun search(query: String){
+    fun search(query: String,onSuccess: (movies: List<Movie>) -> Unit,
+               onError: () -> Unit){
 
         // Create a new coroutine on the UI thread
         scope.launch{
@@ -37,20 +33,32 @@ class MovieListViewModel(private val searchDone : ((movies:List<Movie>) -> Unit)
 
             // Display result of the network request to the user
             when (result) {
-                is Result.Success<List<Movie>> -> searchDone?.invoke(result.data)
+                is GetMoviesResponse -> onSuccess?.invoke(result.movies)
                 else-> onError?.invoke()
             }
         }
     }
+
     fun getUpcoming( onSuccess: (movies: List<Movie>) -> Unit,
                      onError: () -> Unit){
+
+        // Create a new coroutine on the UI thread
         scope.launch{
+
+            // Make the network call and suspend execution until it finishes
             val result = MovieRepository.getUpcomingMovies()
+
+            // Display result of the network request to the user
             when (result) {
                 is GetMoviesResponse -> onSuccess?.invoke(result.movies)
                 else-> onError?.invoke()
             }
         }
+    }
+
+    fun getUpcoming2( onSuccess: (movies: List<Movie>) -> Unit,
+                      onError: () -> Unit){
+        MovieRepository.getUpcomingMovies2(onSuccess,onError)
     }
 
 }

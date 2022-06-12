@@ -20,7 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
 class MovieDetailActivity : AppCompatActivity() {
-    private var movieDetailViewModel =  MovieDetailViewModel(this@MovieDetailActivity::movieRetrieved,null,null)
+    private var movieDetailViewModel =  MovieDetailViewModel()
 
 
     private lateinit var movie:Movie
@@ -40,19 +40,28 @@ class MovieDetailActivity : AppCompatActivity() {
     private lateinit var bottomNavigation : BottomNavigationView
 
     //Listener za click
-    private val mOnItemSelectedListener = NavigationBarView.OnItemSelectedListener{ item ->
-        when (item.itemId) {
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when(item.itemId){
             R.id.navigation_actors -> {
-                val actorsFragment = ActorsFragment(movie.title,movie.id)
+                var actorsFragment:ActorsFragment
+                if(addFavorite.visibility== View.GONE){
+                    actorsFragment = ActorsFragment(movie.title,movie.id,true)
+                } else{
+                    actorsFragment = ActorsFragment(movie.title,movie.id,false)
+                }
                 openFragment(actorsFragment)
-                return@OnItemSelectedListener true
+                return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_similarMovies -> {
-                val similarMoviesFragment = SimilarMoviesFragment(movie.title,movie.id)
-                openFragment(similarMoviesFragment)
-                return@OnItemSelectedListener true
+            R.id.navigation_similarMovies-> {
+                var similarFragment:SimilarMoviesFragment
+                if(addFavorite.visibility==View.GONE) {
+                    similarFragment = SimilarMoviesFragment(movie.title, movie.id, true)
+                }else{
+                    similarFragment  = SimilarMoviesFragment(movie.title,movie.id, false)
+                }
+                openFragment(similarFragment)
+                return@OnNavigationItemSelectedListener true
             }
-
         }
         false
     }
@@ -68,7 +77,7 @@ class MovieDetailActivity : AppCompatActivity() {
         poster=findViewById(R.id.movie_poster)
         backdrop = findViewById(R.id.movie_backdrop)
         bottomNavigation = findViewById(R.id.detailNavigation)
-        bottomNavigation.setOnItemSelectedListener(mOnItemSelectedListener)
+        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         addFavorite=findViewById(R.id.addFavorites)
 
 
@@ -79,8 +88,15 @@ class MovieDetailActivity : AppCompatActivity() {
                 movie = movieDetailViewModel.getMovieByTitle(extras.getString("movie_title", ""))
                 populateDetails()
             }
-            else if (extras.containsKey("movie_id")){
-                movieDetailViewModel.getMovieDetails(extras.getLong("movie_id"))
+            else if (extras.containsKey("movie_id") && !extras.containsKey("exists") ){
+                movieDetailViewModel.getMovie(extras.getLong("movie_id"),onSuccess = ::onSuccess,
+                    onError = ::onError )
+            }
+            else if (extras.containsKey("movie_id") && extras.containsKey("exists") ){
+                movieDetailViewModel.getMovieFromDB(applicationContext,extras.getLong("movie_id"),onSuccess = ::onSuccess,
+                    onError = ::onError )
+                addFavorite.visibility= View.GONE
+
             }
         }
 
@@ -98,6 +114,10 @@ class MovieDetailActivity : AppCompatActivity() {
         }
 
 
+    }
+    fun onSuccess(movie:Movie){
+        this.movie =movie;
+        populateDetails()
     }
     //Funkcija za izmjenu fragmenta
     private fun openFragment(fragment: Fragment) {
@@ -178,13 +198,14 @@ class MovieDetailActivity : AppCompatActivity() {
             onError = ::onError)
     }
     fun onSuccess1(message:String){
-        val toast = Toast.makeText(applicationContext, "Spaseno", Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
         toast.show()
         addFavorite.visibility= View.GONE
+
+
     }
     fun onError() {
-        val toast = Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT)
-        toast.show()
+
     }
 
 

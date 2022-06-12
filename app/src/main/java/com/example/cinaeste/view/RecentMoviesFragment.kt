@@ -19,7 +19,7 @@ import com.example.cinaeste.viewmodel.MovieListViewModel
 class RecentMoviesFragment : Fragment() {
     private lateinit var recentMovies : RecyclerView
     private lateinit var recentMoviesAdapter : MovieListAdapter
-    private var movieListViewModel=MovieListViewModel(null,null)
+    private lateinit var movieListViewModel:MovieListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.recents_fragment, container, false)
@@ -27,11 +27,14 @@ class RecentMoviesFragment : Fragment() {
         recentMovies.layoutManager=GridLayoutManager(activity,2)
         recentMoviesAdapter = MovieListAdapter(arrayListOf()) { movie,view1,view2 -> showMovieDetails(movie,view1,view2) }
         recentMovies.adapter=recentMoviesAdapter
-        recentMoviesAdapter.updateMovies(movieListViewModel.getRecentMovie())
-        movieListViewModel.getUpcoming(
+        //recentMoviesAdapter.updateMovies(movieListViewModel.getRecentMovie())
+       /* movieListViewModel.getUpcoming(
             onSuccess = ::onSuccess,
             onError = ::onError
-        )
+        )*/
+        context?.let { movieListViewModel= MovieListViewModel(it) }
+        movieListViewModel!!.getUpcoming2( onSuccess = ::onSuccess,
+            onError = ::onError)
 
         return view
 
